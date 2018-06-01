@@ -124,7 +124,7 @@ function toggleSearch() {
     }
 }
 // Írd be a json fileod nevét/útvonalát úgy, ahogy nálad van
-getData('/json/characters.json', successAjax);
+getData('json/characters.json', successAjax);
 
 // Live servert használd mindig!!!!!
 /* IDE ÍRD A FÜGGVÉNYEKET!!!!!! NE EBBE AZ EGY SORBA HANEM INNEN LEFELÉ! */
