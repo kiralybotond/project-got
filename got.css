@@ -59,8 +59,22 @@ h1 {
     position: fixed;
     bottom: 25px;
     right: 25px;
+}
+
+#toggleSearch {
+    padding: 5px;
+    border: solid 1px #000;
+    background-color: #ccc;
+}
+
+#toggleSearch:hover {
+    color: white;
+}
+
+#searchSpan {
     background-color: #fff;
     padding: 5px;
+    display: inline;
 }
 
 #searchField {

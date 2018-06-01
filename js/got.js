@@ -40,6 +40,10 @@ function successAjax(xhttp) {
         e.preventDefault();
         characterSelected(alive, searchName(alive, nameSearchField));
     });
+    var toggleSearchButton = document.querySelector('#toggleSearch');
+    searchForm.addEventListener("click", function () {
+        toggleSearch();
+    });
 }
 
 function livingCharacters(characters) {
@@ -108,6 +112,15 @@ function characterSelected(characters, id) {
         i++
     }
     document.querySelector('#descriptionWithPic').innerHTML = detailTable;
+}
+
+function toggleSearch() {
+    var toggle = document.querySelector("#searchSpan");
+    if (toggle.style.display == "inline") {
+        toggle.style.display = "none";
+    } else {
+        toggle.style.display = "inline";
+    }
 }
 // Írd be a json fileod nevét/útvonalát úgy, ahogy nálad van
 getData('/json/characters.json', successAjax);
