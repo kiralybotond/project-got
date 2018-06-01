@@ -41,7 +41,7 @@ function successAjax(xhttp) {
         characterSelected(alive, searchName(alive, nameSearchField));
     });
     var toggleSearchButton = document.querySelector('#toggleSearch');
-    searchForm.addEventListener("click", function () {
+    toggleSearchButton.addEventListener("click", function () {
         toggleSearch();
     });
 }
@@ -92,7 +92,7 @@ function createTable(characters) {
 }
 
 function characterSelected(characters, id) {
-    var detailTable = '<h1>Game Of Thrones</h1>';
+    var detailTable = '';
     var i = 0;
     notFound = true;
     if (id == '0') {
@@ -105,21 +105,22 @@ function characterSelected(characters, id) {
             if (characters[i].house) {
                 house = '<img src="assets/houses/' + characters[i].house + '.png" alt="House ' + characters[i].house + '" class="housePic">'
             }
-            detailTable = '<img class="pictures" src="' + characters[i].picture + '" alt="' + characters[i].name + '"><br>' + house + '<p>' +
+            detailTable += '<img class="pictures" src="' + characters[i].picture + '" alt="' + characters[i].name + '"><br>' + house + '<p>' +
                 characters[i].name + '</p><p>' + characters[i].bio + '</p>';
             notFound = false;
         }
         i++
     }
-    document.querySelector('#descriptionWithPic').innerHTML = detailTable;
+    document.querySelector('#descriptionTable').innerHTML = detailTable;
 }
+
 
 function toggleSearch() {
     var toggle = document.querySelector("#searchSpan");
-    if (toggle.style.display == "inline") {
-        toggle.style.display = "none";
-    } else {
+    if (toggle.style.display == "none") {
         toggle.style.display = "inline";
+    } else {
+        toggle.style.display = "none";
     }
 }
 // Írd be a json fileod nevét/útvonalát úgy, ahogy nálad van
