@@ -1,5 +1,16 @@
+@font-face {
+    font-family: "GoT";
+    src: url("/fonts/got.ttf") format("truetype");
+}
+
 body {
     background-color: #757575;
+    font-family: 'MedievalSharp', cursive;
+}
+
+h1 {
+    font-family: 'GoT', 'Times New Roman', Times, serif;
+    font-size: 1.3em;
 }
 
 #listWithPic {
@@ -39,8 +50,19 @@ body {
     width: 250px;
 }
 
+.housePic {
+    position: absolute;
+    right: 35px;
+}
+
 #search {
     position: fixed;
     bottom: 25px;
     right: 25px;
+    background-color: #fff;
+    padding: 5px;
+}
+
+#searchField {
+    border: none;
 }

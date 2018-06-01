@@ -34,6 +34,12 @@ function successAjax(xhttp) {
             characterSelected(alive, this.getAttribute('data-id'));
         });
     }
+    var searchForm = document.querySelector('#search');
+    searchForm.addEventListener("submit", function (e) {
+        var nameSearchField = document.querySelector('#searchField').value;
+        e.preventDefault();
+        characterSelected(alive, searchName(alive, nameSearchField));
+    });
 }
 
 function livingCharacters(characters) {
@@ -67,10 +73,10 @@ function searchName(characters, name) {
     var eredmeny;
     for (var i = 0; i < characters.length; i++) {
         if (characters[i].name.toLowerCase().localeCompare(name.toLowerCase()) == 0) {
-            return characters[i];
+            return characters[i].id;
         }
     }
-    return 'Nincs ilyen szereplő.';
+    return '0';
 }
 
 function createTable(characters) {
@@ -82,17 +88,21 @@ function createTable(characters) {
 }
 
 function characterSelected(characters, id) {
-    var detailTable = '';
+    var detailTable = '<h1>Game Of Thrones</h1>';
     var i = 0;
     notFound = true;
+    if (id == '0') {
+        detailTable += '<p>Nincs ilyen szereplő</p>';
+        notFound = false;
+    }
     while (notFound) {
         if (characters[i].id == id) {
             var house = '';
             if (characters[i].house) {
-                house = '<img src="assets/houses/' + characters[i].house + '.png" alt="House ' + characters[i].house + '">'
+                house = '<img src="assets/houses/' + characters[i].house + '.png" alt="House ' + characters[i].house + '" class="housePic">'
             }
-            detailTable = '<h1>Game Of Thrones</h1><img class="pictures" src="' + characters[i].picture + '" alt="' + characters[i].name + '"><br>' + characters[i].name +
-                house + '<p>' + characters[i].bio + '</p>';
+            detailTable = '<img class="pictures" src="' + characters[i].picture + '" alt="' + characters[i].name + '"><br>' + house + '<p>' +
+                characters[i].name + '</p><p>' + characters[i].bio + '</p>';
             notFound = false;
         }
         i++
