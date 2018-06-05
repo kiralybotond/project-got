@@ -42,8 +42,15 @@ h1 {
     padding: 10px 0;
 }
 
+#listWithPic img {
+    border-radius: 50%;
+}
+
+#listWithPic img:hover,
 .characterSelect:hover {
-    background-color: aqua;
+    box-shadow: 0 0 10px 2px rgb(255, 237, 179);
+    background-color: rgb(255, 237, 179);
+    cursor: pointer;
 }
 
 .pictures {
@@ -74,7 +81,19 @@ h1 {
 #searchSpan {
     background-color: #fff;
     padding: 5px;
-    display: inline;
+    display: inline-block;
+    width: 175px;
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+#searchSpanClosed {
+    background-color: #fff;
+    padding: 5px;
+    display: inline-block;
+    width: 0;
+    transition-property: width;
+    transition-duration: 0.5s;
 }
 
 #searchField {
