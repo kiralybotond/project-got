@@ -29,12 +29,17 @@ function successAjax(xhttp) {
     sortdByName(alive); // az alive módosul, mert a tömbre csak hivatkozunk és azon módosít a függvény
     createTable(alive);
 
-    var nameSelected = document.querySelectorAll(".characterSelect");
-    for (var i = 0; i < nameSelected.length; i++) {
-        nameSelected[i].addEventListener("click", function () {
-            characterSelected(alive, this.getAttribute('data-id'));
-        });
-    }
+    var nameSelected = document.querySelector("#listWithPic");
+    nameSelected.addEventListener("click", function (e) {
+        characterSelected(alive, e.target.parentElement.getAttribute('data-id'));
+    });
+
+    // var nameSelected = document.querySelectorAll(".characterSelect");
+    // for (var i = 0; i < nameSelected.length; i++) {
+    //     nameSelected[i].addEventListener("click", function (e) {
+    //         characterSelected(alive, e.target.getAttribute('data-id'));
+    //     });
+    // }
 
     searchForm.addEventListener("submit", function (e) {
         var nameSearchField = document.querySelector('#searchField').value;
@@ -85,72 +90,72 @@ function searchName(characters, name) {
 }
 
 function createTable(characters) {
-    // var table = '';
+    var table = '';
     for (i = 0; i < characters.length; i++) {
-        //     table += `<div class="character"><img src="${characters[i].portrait}" alt="${characters[i].name}"><div class="characterSelect" data-id="${characters[i].id}">${characters[i].name}</div></div>';
-        // }
-        // document.querySelector('#listWithPic').innerHTML = table;
-        var listWithPic = document.querySelector('#listWithPic');
-        var listDiv = document.createElement('div');
-        var listDivImg = document.createElement('img');
-        var listDivName = document.createElement('div');
-        listDiv.classList.add('character');
-        listDivName.classList.add('characterSelect');
-        listDivName.setAttribute('data-id', characters[i].id);
-        listDivName.innerText = characters[i].name;
-        listDivImg.setAttribute('src', characters[i].portrait);
-        listDivImg.alt = `Picture of ${characters[i].name}`;
-        listDiv.appendChild(listDivImg);
-        listDiv.appendChild(listDivName);
-        listWithPic.appendChild(listDiv);
+        table += `<div class="character" data-id="${characters[i].id}"><img src="${characters[i].portrait}" alt="${characters[i].name}"><div class="characterSelect">${characters[i].name}</div></div>`;
     }
+    document.querySelector('#listWithPic').innerHTML = table;
+    //     var listWithPic = document.querySelector('#listWithPic');
+    //     var listDiv = document.createElement('div');
+    //     var listDivImg = document.createElement('img');
+    //     var listDivName = document.createElement('div');
+    //     listDiv.classList.add('character');
+    //     listDivName.classList.add('characterSelect');
+    //     listDivName.setAttribute('data-id', characters[i].id);
+    //     listDivName.innerText = characters[i].name;
+    //     listDivImg.setAttribute('src', characters[i].portrait);
+    //     listDivImg.alt = `Picture of ${characters[i].name}`;
+    //     listDiv.appendChild(listDivImg);
+    //     listDiv.appendChild(listDivName);
+    //     listWithPic.appendChild(listDiv);
+    // }
 }
 
 function characterSelected(characters, id) {
-    // var detailTable = '';
-    var descriptionWithPic = document.querySelector('#descriptionTable');
-    descriptionWithPic.innerHTML = "";
+    var detailTable = '';
+    // var descriptionWithPic = document.querySelector('#descriptionTable');
+    // descriptionWithPic.innerHTML = "";
     var i = 0;
     notFound = true;
     if (id == '0') {
-        // detailTable += '<p>Nincs ilyen szereplő.</p>';
-        var nincsDiv = document.createElement('div');
-        nincsDiv.innerHTML = 'Nincs ilyen szereplő.';
-        descriptionWithPic.appendChild(nincsDiv);
+        detailTable += '<p>Nincs ilyen szereplő.</p>';
+        // var nincsDiv = document.createElement('div');
+        // nincsDiv.innerHTML = 'Nincs ilyen szereplő.';
+        // descriptionWithPic.appendChild(nincsDiv);
         notFound = false;
     }
     while (notFound) {
         if (characters[i].id == id) {
-            // var house = '';
-            var descImg = document.createElement('img');
-            var descName = document.createElement('p');
-            var descBio = document.createElement('p');
-            descImg.setAttribute('src', characters[i].picture);
-            descImg.alt = `Picture of ${characters[i].name}`;
-            descImg.classList.add('pictures');
+            var house = '';
+            // var descImg = document.createElement('img');
+            // var descName = document.createElement('p');
+            // var descBio = document.createElement('p');
+            // descImg.setAttribute('src', characters[i].picture);
+            // descImg.alt = `Picture of ${characters[i].name}`;
+            // descImg.classList.add('pictures');
             if (characters[i].house) {
-                var descHouseDiv = document.createElement('div');
-                var descHouse = document.createElement('img');
-                descHouse.setAttribute('src', `assets/houses/${characters[i].house}.png`);
-                descHouse.alt = `House ${characters[i].house}`;
-                descHouseDiv.classList.add('housePic');
-                descHouseDiv.appendChild(descHouse);
-                // house = '<img src="assets/houses/' + characters[i].house + '.png" alt="House ' + characters[i].house + '" class="housePic">'
+                // var descHouseDiv = document.createElement('div');
+                // var descHouse = document.createElement('img');
+                // descHouse.setAttribute('src', `assets/houses/${characters[i].house}.png`);
+                // descHouse.alt = `House ${characters[i].house}`;
+                // descHouseDiv.classList.add('housePic');
+                // descHouseDiv.appendChild(descHouse);
+                house = '<img src="assets/houses/' + characters[i].house + '.png" alt="House ' + characters[i].house + '" class="housePic">'
             }
-            descName.innerText = characters[i].name;
-            descBio.innerText = characters[i].bio;
-            descriptionWithPic.appendChild(descImg);
-            if (characters[i].house) {
-                descriptionWithPic.appendChild(descHouseDiv);
-            }
-            descriptionWithPic.appendChild(descName);
-            descriptionWithPic.appendChild(descBio);
-            // detailTable += `<img class="pictures" src="${characters[i].picture}" alt="${characters[i].name}"><br>${house}<p>${characters[i].name}</p><p>${characters[i].bio}</p>`;
+            // descName.innerText = characters[i].name;
+            // descBio.innerText = characters[i].bio;
+            // descriptionWithPic.appendChild(descImg);
+            // if (characters[i].house) {
+            //     descriptionWithPic.appendChild(descHouseDiv);
+            // }
+            // descriptionWithPic.appendChild(descName);
+            // descriptionWithPic.appendChild(descBio);
+            detailTable += `<img class="pictures" src="${characters[i].picture}" alt="${characters[i].name}"><div>${house}</div><p>${characters[i].name}</><p>${characters[i].bio}</p>`;
             notFound = false;
         }
         i++
     }
-    // document.querySelector('#descriptionTable').innerHTML = detailTable;
+    document.querySelector('#descriptionTable').innerHTML = detailTable;
 }
 
 
