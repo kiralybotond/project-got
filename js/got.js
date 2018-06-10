@@ -30,8 +30,16 @@ function successAjax(xhttp) {
     createTable(alive);
 
     var nameSelected = document.querySelector("#listWithPic");
+    var selectedId = '0';
+    var newSelectedId = '0';
     nameSelected.addEventListener("click", function (e) {
-        characterSelected(alive, e.target.parentElement.getAttribute('data-id'));
+        if (e.target.parentElement.getAttribute('data-id') != null) {
+            newSelectedId = e.target.parentElement.getAttribute('data-id');
+        }
+        clearSelectedCSS(selectedId, newSelectedId);
+        selectedId = newSelectedId
+        characterSelected(alive, selectedId);
+        formatSelected(e.target.parentElement, selectedId);
     });
 
     // var nameSelected = document.querySelectorAll(".characterSelect");
@@ -112,52 +120,53 @@ function createTable(characters) {
 }
 
 function characterSelected(characters, id) {
-    var detailTable = '';
-    // var descriptionWithPic = document.querySelector('#descriptionTable');
-    // descriptionWithPic.innerHTML = "";
-    var i = 0;
-    notFound = true;
-    if (id == '0') {
-        detailTable += '<p>Nincs ilyen szereplő.</p>';
-        // var nincsDiv = document.createElement('div');
-        // nincsDiv.innerHTML = 'Nincs ilyen szereplő.';
-        // descriptionWithPic.appendChild(nincsDiv);
-        notFound = false;
-    }
-    while (notFound) {
-        if (characters[i].id == id) {
-            var house = '';
-            // var descImg = document.createElement('img');
-            // var descName = document.createElement('p');
-            // var descBio = document.createElement('p');
-            // descImg.setAttribute('src', characters[i].picture);
-            // descImg.alt = `Picture of ${characters[i].name}`;
-            // descImg.classList.add('pictures');
-            if (characters[i].house) {
-                // var descHouseDiv = document.createElement('div');
-                // var descHouse = document.createElement('img');
-                // descHouse.setAttribute('src', `assets/houses/${characters[i].house}.png`);
-                // descHouse.alt = `House ${characters[i].house}`;
-                // descHouseDiv.classList.add('housePic');
-                // descHouseDiv.appendChild(descHouse);
-                house = '<img src="assets/houses/' + characters[i].house + '.png" alt="House ' + characters[i].house + '" class="housePic">'
-            }
-            // descName.innerText = characters[i].name;
-            // descBio.innerText = characters[i].bio;
-            // descriptionWithPic.appendChild(descImg);
-            // if (characters[i].house) {
-            //     descriptionWithPic.appendChild(descHouseDiv);
-            // }
-            // descriptionWithPic.appendChild(descName);
-            // descriptionWithPic.appendChild(descBio);
-            detailTable += `<img class="pictures" src="${characters[i].picture}" alt="${characters[i].name}"><div>${house}</div><p>${characters[i].name}</><p>${characters[i].bio}</p>`;
+    if (id != null) {
+        var detailTable = '';
+        // var descriptionWithPic = document.querySelector('#descriptionTable');
+        // descriptionWithPic.innerHTML = "";
+        var i = 0;
+        notFound = true;
+        if (id == '0') {
+            detailTable += '<p>Nincs ilyen szereplő.</p>';
+            // var nincsDiv = document.createElement('div');
+            // nincsDiv.innerHTML = 'Nincs ilyen szereplő.';
+            // descriptionWithPic.appendChild(nincsDiv);
             notFound = false;
         }
-        i++
+        while (notFound) {
+            if (characters[i].id == id) {
+                var house = '';
+                // var descImg = document.createElement('img');
+                // var descName = document.createElement('p');
+                // var descBio = document.createElement('p');
+                // descImg.setAttribute('src', characters[i].picture);
+                // descImg.alt = `Picture of ${characters[i].name}`;
+                // descImg.classList.add('pictures');
+                if (characters[i].house) {
+                    // var descHouseDiv = document.createElement('div');
+                    // var descHouse = document.createElement('img');
+                    // descHouse.setAttribute('src', `assets/houses/${characters[i].house}.png`);
+                    // descHouse.alt = `House ${characters[i].house}`;
+                    // descHouseDiv.classList.add('housePic');
+                    // descHouseDiv.appendChild(descHouse);
+                    house = '<img src="assets/houses/' + characters[i].house + '.png" alt="House ' + characters[i].house + '" class="housePic">'
+                }
+                // descName.innerText = characters[i].name;
+                // descBio.innerText = characters[i].bio;
+                // descriptionWithPic.appendChild(descImg);
+                // if (characters[i].house) {
+                //     descriptionWithPic.appendChild(descHouseDiv);
+                // }
+                // descriptionWithPic.appendChild(descName);
+                // descriptionWithPic.appendChild(descBio);
+                detailTable += `<img class="pictures" src="${characters[i].picture}" alt="${characters[i].name}"><div>${house}</div><p>${characters[i].name}</><p>${characters[i].bio}</p>`;
+                notFound = false;
+            }
+            i++
+        }
+        document.querySelector('#descriptionTable').innerHTML = detailTable;
     }
-    document.querySelector('#descriptionTable').innerHTML = detailTable;
 }
-
 
 function toggleSearch() {
     var toggle = document.querySelector("#searchSpan");
@@ -167,6 +176,26 @@ function toggleSearch() {
         toggle.style.display = "none";
     }
 }
+
+function clearSelectedCSS(dataId, newId) {
+    if (newId != null) {
+        if (dataId != '0') {
+            var selected = document.querySelector('[data-id="' + dataId + '"]');
+            for (var i = 0; i < selected.children.length; i++) {
+                selected.children[i].classList.remove('selected');
+            }
+        }
+    }
+}
+
+function formatSelected(selected, dataId) {
+    if (dataId != 0) {
+        for (var i = 0; i < selected.children.length; i++) {
+            selected.children[i].classList.add('selected');
+        }
+    }
+}
+
 // Írd be a json fileod nevét/útvonalát úgy, ahogy nálad van
 getData('json/characters.json', successAjax);
 
